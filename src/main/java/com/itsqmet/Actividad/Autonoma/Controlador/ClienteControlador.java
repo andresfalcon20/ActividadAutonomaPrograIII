@@ -11,4 +11,9 @@ public class ClienteControlador {
         return "pages/formularioCliente";
     }
 
+    @GetMapping("/formularioProducto")
+    public String formularioProducto() {
+        return "pages/formularioProducto";
+    }
+
 }
