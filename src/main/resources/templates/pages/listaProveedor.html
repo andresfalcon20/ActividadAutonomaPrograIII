@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de Proveedores</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 text-gray-800 flex flex-col">
+
+<nav class="bg-sky-600 backdrop-blur-md shadow-md px-6 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <a href="#" class="flex items-center">
+            <img src="https://cdn-icons-png.flaticon.com/512/746/746900.png" class="h-8 mr-3" alt="Logo" />
+            <span class="text-2xl font-bold text-white">TIENDA CALIDAD Y PRECIO</span>
+        </a>
+        <div class="space-x-4">
+            <a th:href="@{/formularioProducto}" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition">REGISTRAR PRODUCTO</a>
+            <a th:href="@{/formularioCliente}" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition">REGISTRAR CLIENTE</a>
+            <a th:href="@{/formularioProveedor}" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition">REGISTRAR PROVEEDOR</a>
+            <a th:href="@{/formularioFactura}" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition">GENERAR FACTURA</a>
+        </div>
+    </div>
+</nav>
+
+<main class="flex-grow max-w-5xl mx-auto mt-14 p-10 bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl text-center text-blue-800">
+    <h1 class="text-4xl md:text-5xl font-extrabold mb-8 text-black">PROVEEDORES</h1>
+
+    <!-- Barra de búsqueda -->
+    <form th:action="@{/listaProveedores}" method="get" class="mb-8">
+        <div class="input-group flex justify-center gap-4">
+            <input type="text" name="codigoBuscar"
+                   class="w-2/3 bg-white text-gray-800 border border-blue-200 rounded-lg p-3"
+                   placeholder="" th:value="${buscarProveedor}">
+            <button type="submit"
+                    class="bg-black hover:bg-blue-800 text-white p-3 rounded-lg shadow-md transition duration-300">
+                Buscar
+            </button>
+        </div>
+    </form>
+
+    <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-blue-200">
+            <tr>
+                <th scope="col" class="py-3 px-6">Código</th>
+                <th scope="col" class="py-3 px-6">Nombre</th>
+                <th scope="col" class="py-3 px-6">Dirección</th>
+                <th scope="col" class="py-3 px-6">Editar/Eliminar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="bg-white border-b hover:bg-blue-50" th:each="proveedor : ${proveedores}">
+                <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap" th:text="${proveedor.codigo}"></td>
+                <td class="py-4 px-6" th:text="${proveedor.nombre}"></td>
+                <td class="py-4 px-6" th:text="${proveedor.direccion}"></td>
+                <td class="py-4 px-6">
+                    <a th:href="@{'/editarProveedor/' + ${proveedor.codigo}}" class="font-medium text-blue-600 hover:underline mr-3">Editar</a>
+                    <a th:href="@{'/eliminarProveedor/' + ${proveedor.codigo}}"
+                       class="font-medium text-red-600 hover:underline">Eliminar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-8">
+        <a th:href="@{/formularioProveedor}" class="inline-flex items-center bg-black hover:bg-blue-700 px-6 py-3 rounded-lg text-white font-medium shadow transition">
+            Registrar Nuevo Proveedor
+        </a>
+    </div>
+
+</main>
+
+</body>
+</html>

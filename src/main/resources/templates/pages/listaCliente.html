@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Lista de Clientes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 text-gray-800 flex flex-col min-h-screen">
+
+<nav class="bg-sky-600 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <span class="text-2xl font-bold text-white">TIENDA CALIDAD Y PRECIO</span>
+        <div class="space-x-4">
+            <a th:href="@{/formularioProducto}" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition">REGISTRAR PRODUCTO</a>
+            <a th:href="@{/formularioCliente}" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition">REGISTRAR CLIENTE</a>
+            <a th:href="@{/formularioProveedor}" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition">REGISTRAR PROVEEDOR</a>
+            <a th:href="@{/formularioFactura}" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition">GENERAR FACTURA</a>
+        </div>
+    </div>
+</nav>
+
+<main class="flex-grow max-w-5xl mx-auto mt-14 p-10 bg-white/90 rounded-2xl shadow-xl text-center text-black">
+    <h1 class="text-4xl font-extrabold mb-8">CLIENTES</h1>
+
+    <!-- Barra de búsqueda -->
+    <form th:action="@{/listaCliente}" method="get" class="mb-8">
+        <div class="input-group flex justify-center gap-8">
+            <input type="text" name="cedulaBuscar"
+                   class="w-2/3 bg-white text-gray-800 border border-black rounded-lg p-3"
+                   placeholder="" th:value="${buscarCliente}">
+            <button type="submit"
+                    class="bg-black hover:bg-blue-800 text-white p-3 rounded-lg shadow-md transition duration-300">
+                Buscar
+            </button>
+        </div>
+    </form>
+
+    <div class="overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-blue-200">
+            <tr>
+                <th class="py-3 px-6">Cédula</th>
+                <th class="py-3 px-6">Nombre</th>
+                <th class="py-3 px-6">Apellido</th>
+                <th class="py-3 px-6">Dirección</th>
+                <th class="py-3 px-6">Fecha Nacimiento</th>
+                <th class="py-3 px-6">Editar/Eliminar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cliente : ${clientes}" class="bg-white border-b hover:bg-blue-50">
+                <td th:text="${cliente.cedula}" class="py-4 px-6"></td>
+                <td th:text="${cliente.nombre}" class="py-4 px-6"></td>
+                <td th:text="${cliente.apellido}" class="py-4 px-6"></td>
+                <td th:text="${cliente.direccion}" class="py-4 px-6"></td>
+                <td th:text="${cliente.fechaNacimiento}" class="py-4 px-6"></td>
+                <td class="py-4 px-6">
+                    <a th:href="@{'/editarCliente/' + ${cliente.cedula}}" class="text-black mr-3">Editar</a>
+                    <a th:href="@{'/eliminarCliente/' + ${cliente.cedula}}" class="text-black ">Eliminar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-8">
+        <a th:href="@{/formularioCliente}" class="bg-black hover:bg-blue-700 px-6 py-3 rounded-lg text-white font-medium shadow transition">
+            Registrar Nuevo Cliente
+        </a>
+    </div>
+</main>
+
+</body>
+</html>
